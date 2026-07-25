@@ -10,6 +10,7 @@ import { useCartWishlist } from '@/context/CartWishlistContext';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Heart, ShoppingBag, Eye, RefreshCw, Star } from 'lucide-react';
+import { STORE_PRODUCTS } from '@/data/products';
 
 interface Product {
   id: string;
@@ -40,6 +41,10 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setProducts(STORE_PRODUCTS.filter((product) => product.featured).slice(0, 4));
+    setLoading(false);
+    return;
+
     // Fetch products
     const fetchFeatured = async () => {
       try {
@@ -200,7 +205,6 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">
             <div className="text-center space-y-2">
               <h2 className="text-2xl sm:text-4xl font-serif tracking-wider text-luxury-charcoal-900 dark:text-luxury-ivory-50">{t('home.featured')}</h2>
-              <p className="text-xs text-luxury-charcoal-500">{t('home.featuredSub')}</p>
             </div>
 
             {loading ? (

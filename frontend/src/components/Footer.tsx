@@ -106,15 +106,15 @@ export const Footer: React.FC = () => {
           <ul className="space-y-3 text-xs">
             <li className="flex items-center gap-2">
               <MapPin className="w-3.5 h-3.5 text-luxury-gold-500" />
-              <span>London · New York · Florence · Tokyo</span>
+              <span>Warangal, Telangana</span>
             </li>
             <li className="flex items-center gap-2">
               <Phone className="w-3.5 h-3.5 text-luxury-gold-500" />
-              <span>+1 (800) GOAT-HIDE</span>
+              <span>+9100000000</span>
             </li>
             <li className="flex items-center gap-2">
               <Mail className="w-3.5 h-3.5 text-luxury-gold-500" />
-              <span>concierge@goathides.com</span>
+              <span>Contact us @goathides.com</span>
             </li>
           </ul>
         </div>
@@ -122,21 +122,8 @@ export const Footer: React.FC = () => {
 
       {/* Footer Bottom copyright and payment icons */}
       <div className="bg-luxury-charcoal-950 py-6 text-center text-[10px] text-luxury-charcoal-500 px-6 border-t border-luxury-charcoal-800">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <div>
-            © {new Date().getFullYear()} GOATHIDES S.p.A. All rights reserved. 
-            <span className="mx-2">·</span>
-            <Link href="/privacy" className="hover:underline">Privacy Policy</Link>
-            <span className="mx-2">·</span>
-            <Link href="/terms" className="hover:underline">Terms of Service</Link>
-          </div>
-          <div className="flex gap-4 items-center">
-            <span className="opacity-60 grayscale hover:grayscale-0 cursor-pointer">Stripe</span>
-            <span className="opacity-60 grayscale hover:grayscale-0 cursor-pointer">PayPal</span>
-            <span className="opacity-60 grayscale hover:grayscale-0 cursor-pointer">Razorpay</span>
-            <span className="opacity-60 grayscale hover:grayscale-0 cursor-pointer">Apple Pay</span>
-            <span className="opacity-60 grayscale hover:grayscale-0 cursor-pointer">Google Pay</span>
-          </div>
+        <div className="max-w-7xl mx-auto flex justify-center items-center">
+          <div>@2026 goat heights all rights reserved.</div>
         </div>
       </div>
     </footer>

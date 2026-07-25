@@ -9,6 +9,7 @@ import { useCurrency } from '@/context/CurrencyContext';
 import { useCartWishlist } from '@/context/CartWishlistContext';
 import { Star, ShieldCheck, Heart, RefreshCw, ChevronRight, CornerDownRight, Gift } from 'lucide-react';
 import Link from 'next/link';
+import { getStoreProduct, STORE_PRODUCTS } from '@/data/products';
 
 interface Review {
   id: string;
@@ -54,62 +55,27 @@ export default function ProductDetails({ params }: { params: Promise<{ slug: str
   const [submittingReview, setSubmittingReview] = useState(false);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(`http://localhost:5000/api/products/${slug}`);
-        if (res.ok) {
-          const data = await res.json();
-          setProduct(data.product);
-          setRelated(data.relatedProducts);
-          setFrequentlyBought(data.frequentlyBought);
-          addRecentlyViewed(slug);
-        } else {
-          throw new Error();
-        }
-      } catch {
-        // Fallback local mockup product
-        const mockProduct: Product = {
-          id: '1',
-          name: "The Aurelia Satchel",
-          slug: "the-aurelia-satchel",
-          description: "An architectural masterpiece in full-grain goat leather, featuring a structural silhouette, signature gold-plated hardware, and a suede-lined interior. Designed for day-to-night versatility.",
-          price: 850.00,
-          compareAtPrice: 950.00,
-          rating: 4.8,
-          images: [],
-          sku: "GH-HB-AURELIA-01",
-          stock: 15,
-          details: {
-            Material: "100% Full-Grain Goat Leather",
-            Lining: "Micro-Suede",
-            Hardware: "24k Gold-Plated Solid Brass",
-            Dimensions: "28cm x 20cm x 12cm",
-            Origin: "Florence, Italy",
-          },
-          reviews: [
-            { id: 'r1', rating: 5, title: 'Absolute perfection', comment: 'The goat leather smells wonderful. The hardware weights beautifully. It fits my daily essentials seamlessly.', createdAt: new Date().toLocaleDateString(), user: { name: 'Sophia Sterling' } }
-          ],
-        };
-        setProduct(mockProduct);
-        addRecentlyViewed(slug);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProduct();
+    setLoading(true);
+    const selected = getStoreProduct(slug);
+    if (selected) {
+      const selectedProduct: Product = {
+        ...selected,
+        reviews: [{ id: `review-${selected.id}`, rating: 5, title: 'Exceptional craftsmanship', comment: `The detail on the ${selected.name} is outstanding.`, createdAt: new Date().toLocaleDateString(), user: { name: 'GOATHIDES Customer' } }],
+      };
+      setProduct(selectedProduct);
+      setRelated(STORE_PRODUCTS.filter((item) => item.category === selected.category && item.id !== selected.id).map((item) => ({ ...item, reviews: [] })));
+      setFrequentlyBought(STORE_PRODUCTS.filter((item) => item.category !== selected.category).slice(0, 2).map((item) => ({ ...item, reviews: [] })));
+      addRecentlyViewed(slug);
+    } else {
+      setProduct(null);
+      setRelated([]);
+      setFrequentlyBought([]);
+    }
+    setActiveImg(0);
+    setLoading(false);
   }, [slug]);
 
-  const productImages: Record<string, string> = {
-    'the-aurelia-satchel': '/aurelia.jpg',
-    'the-sovereign-briefcase': '/briefcase.jpg',
-    'the-vanguard-bifold': '/bifold.jpg',
-    'the-icon-cafe-racer': '/jacket.jpg',
-  };
-  const featuredImage = product ? productImages[product.slug] : undefined;
-  const galleryImages = featuredImage
-    ? [featuredImage, ...(product?.images || []).filter((image) => image !== featuredImage), '/leather.jpg', '/goat.jpeg']
-    : (product?.images && product.images.length > 0 ? product.images : ['/leather.jpg']);
+  const galleryImages = product?.images?.length ? product.images : ['/leather.jpg'];
 
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -185,7 +151,7 @@ export default function ProductDetails({ params }: { params: Promise<{ slug: str
   if (loading) {
     return (
       <div className="min-h-screen bg-luxury-ivory-50 dark:bg-luxury-charcoal-900 flex items-center justify-center font-serif text-lg tracking-widest">
-        Opening GOATHIDES Portfolio...
+        Loading product details...
       </div>
     );
   }
@@ -381,7 +347,7 @@ export default function ProductDetails({ params }: { params: Promise<{ slug: str
                 <p className="text-xs mt-2 text-luxury-ivory-100">Preserve the natural patina with gentle care: minimal water exposure, regular soft brushing, and conditioning using recommended products.</p>
               </div>
               <div className="flex-shrink-0">
-                <img src="/handbrushed.jpg" alt="Care Guide" className="w-48 h-32 object-cover rounded opacity-80 border border-white/10" />
+                <img src="/goat.jpeg" alt="Care Guide" className="w-48 h-32 object-cover rounded opacity-80 border border-white/10" />
               </div>
             </div>
           </div>

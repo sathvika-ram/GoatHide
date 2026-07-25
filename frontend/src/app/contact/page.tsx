@@ -48,21 +48,21 @@ export default function Contact() {
                 <MapPin className="w-5 h-5 text-luxury-gold-500 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-bold">Main Headquarters</h4>
-                  <p className="text-luxury-charcoal-500 mt-1">GOATHIDES Design House</p>
+                  <p className="text-luxury-charcoal-500 mt-1">Warangal, Telangana</p>
                 </div>
               </div>
               <div className="flex gap-4 items-start">
                 <Mail className="w-5 h-5 text-luxury-gold-500 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-bold">Inquiries & Returns</h4>
-                  <p className="text-luxury-charcoal-500 mt-1">askus@goathides.com</p>
+                  <p className="text-luxury-charcoal-500 mt-1"> @goathides.com</p>
                 </div>
               </div>
               <div className="flex gap-4 items-start">
                 <Phone className="w-5 h-5 text-luxury-gold-500 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-bold">Customer Service</h4>
-                  <p className="text-luxury-charcoal-500 mt-1">+1 (800) 462-8443 (Mon - Fri: 9:00 AM - 6:00 PM CET)</p>
+                  <p className="text-luxury-charcoal-500 mt-1">+9100000000 (Mon - Fri: 9:00 AM - 6:00 PM CET)</p>
                 </div>
               </div>
             </div>

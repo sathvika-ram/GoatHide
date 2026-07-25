@@ -11,6 +11,7 @@ import { useCartWishlist, ProductDetail } from '@/context/CartWishlistContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, SlidersHorizontal, Search, RefreshCw, ShoppingBag, Eye, Heart, X } from 'lucide-react';
 import Link from 'next/link';
+import { STORE_PRODUCTS } from '@/data/products';
 
 interface Product {
   id: string;
@@ -59,6 +60,16 @@ function ShopContent() {
   const [sortOrder, setSortOrder] = useState(searchParams.get('sort') || 'new');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Navbar and footer collection links update the URL while this page remains mounted.
+  // Mirror those URL values into the filter state so the matching products render immediately.
+  useEffect(() => {
+    setSearchVal(searchParams.get('search') || '');
+    setActiveCategory(searchParams.get('category') || '');
+    setMinPrice(searchParams.get('minPrice') || '');
+    setMaxPrice(searchParams.get('maxPrice') || '');
+    setSortOrder(searchParams.get('sort') || 'new');
+  }, [searchParams]);
+
   const fetchFilteredProducts = async () => {
     setLoading(true);
     const query = new URLSearchParams();
@@ -80,13 +91,13 @@ function ShopContent() {
       // Offline local search and filter logic fallback
       const MOCK_PRODUCTS: Product[] = [
         { id: '1', name: "The Aurelia Satchel", slug: "the-aurelia-satchel", description: "Full-grain goat leather luxury handbag with gold hardware.", price: 850.00, compareAtPrice: 950.00, rating: 4.8, images: ["/aurelia.jpg"], sku: "GH-HB-AURELIA-01", details: { Material: "French Goat Leather", Size: "28cm x 20cm", Origin: "Italy" } },
-        { id: '2', name: "The Celestia Tote", slug: "the-celestia-tote", description: "Vegetable tanned daily work satchel purse.", price: 680.00, rating: 4.5, images: [], sku: "GH-HB-CELESTIA-02", details: { Material: "Premium Goat Hide", Size: "38cm x 30cm", Origin: "Austria" } },
+        { id: '2', name: "The Celestia Tote", slug: "the-celestia-tote", description: "Vegetable tanned daily work satchel purse.", price: 680.00, rating: 4.5, images: ["/tote.jpg"], sku: "GH-HB-CELESTIA-02", details: { Material: "Premium Goat Hide", Size: "38cm x 30cm", Origin: "Austria" } },
         { id: '3', name: "The Sovereign Briefcase", slug: "the-sovereign-briefcase", description: "Saffiano laptop organizer bag 16-inch compartment.", price: 950.00, compareAtPrice: 1100.00, rating: 4.9, images: ["/briefcase.jpg"], sku: "GH-LB-SOVEREIGN-01", details: { Material: "Saffiano Leather", Size: "40cm x 29cm", Origin: "Germany" } },
         { id: '4', name: "The Vanguard Bifold", slug: "the-vanguard-bifold", description: "RFID shielding billfold with cash divider.", price: 180.00, rating: 4.7, images: ["/bifold.jpg"], sku: "GH-WA-VANGUARD-01", details: { Material: "Pebbled Leather", Size: "11cm x 9cm", Origin: "France" } },
-        { id: '5', name: "The Heritage Classic Belt", slug: "the-heritage-classic-belt", description: "Bonded double grain gold-accented dress belt.", price: 120.00, rating: 4.4, images: [], sku: "GH-BT-HERITAGE-01", details: { Material: "Saddle Leather", Size: "35mm Width", Origin: "Spain" } },
+        { id: '5', name: "The Heritage Classic Belt", slug: "the-heritage-classic-belt", description: "Bonded double grain gold-accented dress belt.", price: 120.00, rating: 4.4, images: ["/heritagebelt.jpg"], sku: "GH-BT-HERITAGE-01", details: { Material: "Saddle Leather", Size: "35mm Width", Origin: "Spain" } },
         { id: '6', name: "The Icon Cafe Racer Jacket", slug: "the-icon-cafe-racer", description: "Classic retro styled luxury biker outwear.", price: 1200.00, compareAtPrice: 1450.00, rating: 4.9, images: ["/jacket.jpg"], sku: "GH-JK-ICERACER-01", details: { Material: "1.2mm Drum-Dyed Leather", Size: "Slim Fit", Origin: "Italy" } },
-        { id: '7', name: "The Odyssey Weekender", slug: "the-odyssey-weekender", description: "45 Liters airport standard carry-on duffel travel bag.", price: 1100.00, rating: 4.8, images: [], sku: "GH-DF-ODYSSEY-01", details: { Material: "Heavy Canvas & Leather", Size: "50cm x 28cm", Origin: "United Kingdom" } },
-        { id: '8', name: "The Sterling Oxford", slug: "the-sterling-oxford", description: "Cap-toe handcrafted blake stitch leather oxford dress shoes.", price: 450.00, compareAtPrice: 520.00, rating: 4.8, images: [], sku: "GH-SH-STERLING-01", details: { Material: "Hand-Colored Hide", Size: "Standard sizing", Origin: "Italy" } }
+        { id: '7', name: "The Odyssey Weekender", slug: "the-odyssey-weekender", description: "45 Liters airport standard carry-on duffel travel bag.", price: 1100.00, rating: 4.8, images: ["/duffel.jpg"], sku: "GH-DF-ODYSSEY-01", details: { Material: "Heavy Canvas & Leather", Size: "50cm x 28cm", Origin: "United Kingdom" } },
+        { id: '8', name: "The Sterling Oxford", slug: "the-sterling-oxford", description: "Cap-toe handcrafted blake stitch leather oxford dress shoes.", price: 450.00, compareAtPrice: 520.00, rating: 4.8, images: ["/shoe.jpg"], sku: "GH-SH-STERLING-01", details: { Material: "Hand-Colored Hide", Size: "Standard sizing", Origin: "Italy" } }
       ];
 
       let filtered = [...MOCK_PRODUCTS];
@@ -117,8 +128,35 @@ function ShopContent() {
     }
   };
 
+  // Keep browsing instant and predictable even when the API is unavailable.
+  const filterLocalProducts = () => {
+    setLoading(true);
+    let filtered = [...STORE_PRODUCTS];
+
+    if (searchVal) {
+      const query = searchVal.toLowerCase();
+      filtered = filtered.filter((product) =>
+        product.name.toLowerCase().includes(query) || product.description.toLowerCase().includes(query)
+      );
+    }
+    if (activeCategory) {
+      const accessoryCategories = ['leather-wallets', 'leather-belts', 'passport-covers', 'card-holders', 'accessories'];
+      filtered = activeCategory === 'accessories'
+        ? filtered.filter((product) => accessoryCategories.includes(product.category))
+        : filtered.filter((product) => product.category === activeCategory);
+    }
+    if (minPrice) filtered = filtered.filter((product) => product.price >= Number(minPrice));
+    if (maxPrice) filtered = filtered.filter((product) => product.price <= Number(maxPrice));
+    if (sortOrder === 'price_asc') filtered.sort((a, b) => a.price - b.price);
+    else if (sortOrder === 'price_desc') filtered.sort((a, b) => b.price - a.price);
+    else if (sortOrder === 'rating') filtered.sort((a, b) => b.rating - a.rating);
+
+    setProducts(filtered);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    fetchFilteredProducts();
+    filterLocalProducts();
   }, [searchVal, activeCategory, minPrice, maxPrice, sortOrder]);
 
   const updateUrl = (key: string, val: string) => {

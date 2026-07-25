@@ -44,9 +44,9 @@ export const Header: React.FC = () => {
   return (
     <>
       {/* Top Banner Bar */}
-      <div className="bg-luxury-charcoal-900 text-luxury-gold-200 text-xs py-2 px-6 flex justify-between items-center border-b border-luxury-gold-900/30 gap-4">
+      <div className="bg-luxury-charcoal-900 text-luxury-gold-200 text-xs py-2 px-3 sm:px-6 flex justify-between items-center border-b border-luxury-gold-900/30 gap-4">
         <div>{topBannerText}</div>
-        <div className="flex gap-4 items-center flex-wrap justify-end">
+        <div className="hidden sm:flex gap-4 items-center flex-wrap justify-end">
           <div className="flex items-center gap-1">
             <Globe className="w-3 h-3 text-luxury-gold-400" />
             <select
@@ -102,7 +102,7 @@ export const Header: React.FC = () => {
 
       {/* Main Luxury Header */}
       <header className="sticky top-0 z-40 bg-luxury-ivory-50/80 dark:bg-luxury-charcoal-900/80 backdrop-blur-md border-b border-luxury-gold-500/10 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex justify-between items-center gap-2">
           
           {/* Mobile Menu Toggle */}
           <button 
@@ -114,15 +114,15 @@ export const Header: React.FC = () => {
 
           {/* Luxury Logo */}
           <div className="flex-1 md:flex-initial text-center md:text-left">
-            <Link href="/" className="group inline-flex items-center gap-3">
+            <Link href="/" className="group inline-flex items-center gap-2 sm:gap-3">
               <Image
                 src="/goat.jpeg"
                 alt="GOATHIDES logo"
-                width={44}
-                height={44}
-                className="rounded-full object-cover border border-luxury-gold-500/30"
+                width={40}
+                height={40}
+                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full object-cover border border-luxury-gold-500/30"
               />
-              <span className="font-serif text-2xl tracking-[0.25em] font-medium text-luxury-charcoal-900 dark:text-luxury-ivory-50 group-hover:text-luxury-gold-500 transition-colors duration-300">
+              <span className="font-serif text-lg sm:text-2xl tracking-[0.08em] sm:tracking-[0.25em] font-medium text-luxury-charcoal-900 dark:text-luxury-ivory-50 group-hover:text-luxury-gold-500 transition-colors duration-300">
                 GOATHIDES
               </span>
             </Link>
@@ -143,8 +143,8 @@ export const Header: React.FC = () => {
                   <h4 className="font-serif text-xs font-bold text-luxury-gold-500 mb-3 tracking-wider">Ladies Handbags</h4>
                   <ul className="space-y-2 text-xs normal-case tracking-normal">
                     <li><Link href="/shop?category=luxury-womens-handbags" className="hover:text-luxury-gold-500">Ladies Handbags</Link></li>
-                    <li><Link href="/shop?category=shoulder-bags" className="hover:text-luxury-gold-500">Shoulder Bags</Link></li>
-                    <li><Link href="/shop?category=tote-bags" className="hover:text-luxury-gold-500">Tote Bags</Link></li>
+                    <li><Link href="/shop?category=luxury-womens-handbags" className="hover:text-luxury-gold-500">Shoulder Bags</Link></li>
+                    <li><Link href="/shop?category=luxury-womens-handbags" className="hover:text-luxury-gold-500">Tote Bags</Link></li>
                   </ul>
                 </div>
                 <div>
@@ -152,7 +152,7 @@ export const Header: React.FC = () => {
                   <ul className="space-y-2 text-xs normal-case tracking-normal">
                     <li><Link href="/shop?category=loafers" className="hover:text-luxury-gold-500">Loafers</Link></li>
                     <li><Link href="/shop?category=formal-shoes" className="hover:text-luxury-gold-500">Formal Shoes</Link></li>
-                    <li><Link href="/shop?category=leather-shoes" className="hover:text-luxury-gold-500">Leather Shoes</Link></li>
+                    <li><Link href="/shop?category=formal-shoes" className="hover:text-luxury-gold-500">Leather Shoes</Link></li>
                   </ul>
                 </div>
                 <div>
@@ -160,7 +160,7 @@ export const Header: React.FC = () => {
                   <ul className="space-y-2 text-xs normal-case tracking-normal">
                     <li><Link href="/shop?category=luxury-laptop-bags" className="hover:text-luxury-gold-500">Laptop Bags</Link></li>
                     <li><Link href="/shop?category=duffel-bags" className="hover:text-luxury-gold-500">Duffel Bags</Link></li>
-                    <li><Link href="/shop?category=travel-bags" className="hover:text-luxury-gold-500">Travel Bags</Link></li>
+                    <li><Link href="/shop?category=duffel-bags" className="hover:text-luxury-gold-500">Travel Bags</Link></li>
                   </ul>
                 </div>
                 <div>
@@ -181,8 +181,8 @@ export const Header: React.FC = () => {
                 <div>
                   <h4 className="font-serif text-xs font-bold text-luxury-gold-500 mb-3 tracking-wider">Pouches</h4>
                   <ul className="space-y-2 text-xs normal-case tracking-normal">
-                    <li><Link href="/shop?category=pouches" className="hover:text-luxury-gold-500">Pouches</Link></li>
-                    <li><Link href="/shop?category=mobile-pouches" className="hover:text-luxury-gold-500">Mobile Pouches</Link></li>
+                    <li><Link href="/shop?category=accessories" className="hover:text-luxury-gold-500">Pouches</Link></li>
+                    <li><Link href="/shop?category=accessories" className="hover:text-luxury-gold-500">Mobile Pouches</Link></li>
                     <li><Link href="/shop?category=passport-covers" className="hover:text-luxury-gold-500">Passport Sleeves</Link></li>
                   </ul>
                 </div>
@@ -196,7 +196,7 @@ export const Header: React.FC = () => {
           </nav>
 
           {/* Action Icons */}
-          <div className="flex items-center gap-6 text-luxury-charcoal-700 dark:text-luxury-ivory-100">
+          <div className="flex items-center gap-3 sm:gap-6 text-luxury-charcoal-700 dark:text-luxury-ivory-100">
             {/* Search Toggle */}
             <button onClick={() => setSearchOpen(!searchOpen)} className="hover:text-luxury-gold-500 transition-colors">
               <Search className="w-5 h-5" />
@@ -215,7 +215,7 @@ export const Header: React.FC = () => {
             )}
 
             {/* Wishlist Link */}
-            <Link href="/wishlist" className="hover:text-luxury-gold-500 transition-colors">
+              <Link href="/wishlist" className="hidden sm:block hover:text-luxury-gold-500 transition-colors">
               <Heart className="w-5 h-5" />
             </Link>
 
