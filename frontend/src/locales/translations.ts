@@ -56,6 +56,8 @@ export const translations: Record<Locale, Record<string, any>> = {
     
     common: {
       search: "Search",
+      language: "Language",
+      currency: "Currency",
       searchPlaceholder: "Search GOATHIDES luxury leather...",
       shopCollection: "Shop Collection",
       discount: "Discount",

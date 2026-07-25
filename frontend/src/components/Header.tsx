@@ -130,8 +130,6 @@ export const Header: React.FC = () => {
 
           {/* Desktop Navigation Menu (Mega Menu Inspired) */}
           <nav className="hidden md:flex gap-8 items-center text-sm font-medium tracking-widest text-luxury-charcoal-700 dark:text-luxury-ivory-100 uppercase">
-            <Link href="/" className="hover:text-luxury-gold-500 transition-colors py-2">{t('nav.home')}</Link>
-            
             {/* Mega Menu Toggle Link */}
             <div className="relative group">
               <Link href="/shop" className="hover:text-luxury-gold-500 transition-colors py-2 flex items-center gap-1">
@@ -435,7 +433,6 @@ export const Header: React.FC = () => {
                 </button>
               </div>
               <nav className="flex flex-col gap-4 text-sm font-semibold tracking-wider uppercase text-luxury-charcoal-800 dark:text-luxury-ivory-100">
-                <Link href="/" onClick={() => setMobileMenuOpen(false)}>{t('nav.home')}</Link>
                 <Link href="/shop" onClick={() => setMobileMenuOpen(false)}>{t('nav.shop')}</Link>
                 <Link href="/about" onClick={() => setMobileMenuOpen(false)}>{t('nav.about')}</Link>
                 <Link href="/craftsmanship" onClick={() => setMobileMenuOpen(false)}>{t('nav.craftsmanship')}</Link>
@@ -443,6 +440,64 @@ export const Header: React.FC = () => {
                 <Link href="/blog" onClick={() => setMobileMenuOpen(false)}>{t('nav.blog')}</Link>
                 <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>{t('nav.contact')}</Link>
               </nav>
+
+              <div className="mt-8 space-y-4">
+                <div className="text-[10px] tracking-[0.35em] uppercase text-luxury-gold-500">Preferences</div>
+                <div className="space-y-3 text-xs">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-luxury-charcoal-700 dark:text-luxury-ivory-100 uppercase tracking-wide">{t('checkout.country')}</label>
+                    <select
+                      value={country}
+                      onChange={handleCountryChange}
+                      className="w-full bg-luxury-charcoal-900/5 dark:bg-luxury-ivory-100/5 text-luxury-charcoal-900 dark:text-luxury-ivory-100 border border-luxury-charcoal-300 dark:border-luxury-ivory-700 rounded px-3 py-2"
+                    >
+                      {(Object.entries(COUNTRY_SETTINGS) as [CountryCode, (typeof COUNTRY_SETTINGS)[CountryCode]][]).map(
+                        ([code, settings]) => (
+                          <option key={code} value={code} className="bg-luxury-charcoal-900 dark:bg-luxury-charcoal-900">
+                            {settings.label}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-luxury-charcoal-700 dark:text-luxury-ivory-100 uppercase tracking-wide">{t('common.language')}</label>
+                    <select
+                      value={locale}
+                      onChange={handleLanguageChange}
+                      className="w-full bg-luxury-charcoal-900/5 dark:bg-luxury-ivory-100/5 text-luxury-charcoal-900 dark:text-luxury-ivory-100 border border-luxury-charcoal-300 dark:border-luxury-ivory-700 rounded px-3 py-2"
+                    >
+                      <option value="en" className="bg-luxury-charcoal-900">EN</option>
+                      <option value="fr" className="bg-luxury-charcoal-900">FR</option>
+                      <option value="de" className="bg-luxury-charcoal-900">DE</option>
+                      <option value="es" className="bg-luxury-charcoal-900">ES</option>
+                      <option value="it" className="bg-luxury-charcoal-900">IT</option>
+                      <option value="ar" className="bg-luxury-charcoal-900">العربية</option>
+                      <option value="hi" className="bg-luxury-charcoal-900">हिन्दी</option>
+                      <option value="te" className="bg-luxury-charcoal-900">తెలుగు</option>
+                      <option value="ja" className="bg-luxury-charcoal-900">日本語</option>
+                      <option value="zh" className="bg-luxury-charcoal-900">中文</option>
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-luxury-charcoal-700 dark:text-luxury-ivory-100 uppercase tracking-wide">{t('common.currency')}</label>
+                    <select
+                      value={currency}
+                      onChange={handleCurrencyChange}
+                      className="w-full bg-luxury-charcoal-900/5 dark:bg-luxury-ivory-100/5 text-luxury-charcoal-900 dark:text-luxury-ivory-100 border border-luxury-charcoal-300 dark:border-luxury-ivory-700 rounded px-3 py-2"
+                    >
+                      <option value="USD" className="bg-luxury-charcoal-900">USD ($)</option>
+                      <option value="EUR" className="bg-luxury-charcoal-900">EUR (€)</option>
+                      <option value="GBP" className="bg-luxury-charcoal-900">GBP (£)</option>
+                      <option value="INR" className="bg-luxury-charcoal-900">INR (₹)</option>
+                      <option value="JPY" className="bg-luxury-charcoal-900">JPY (¥)</option>
+                      <option value="AED" className="bg-luxury-charcoal-900">AED (د.إ)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </>
         )}

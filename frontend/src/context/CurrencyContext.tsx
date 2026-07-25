@@ -40,7 +40,14 @@ const CURRENCY_LOCALE: Record<Currency, string> = {
 };
 
 export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currency, setCurrencyState] = useState<Currency>('USD');
+  const [currency, setCurrencyState] = useState<Currency>('INR');
+
+  React.useEffect(() => {
+    const storedCurrency = localStorage.getItem('gh_currency') as Currency | null;
+    if (storedCurrency && Object.prototype.hasOwnProperty.call(EXCHANGE_RATES, storedCurrency)) {
+      setCurrencyState(storedCurrency);
+    }
+  }, []);
 
   const setCurrency = (newCurrency: Currency) => {
     setCurrencyState(newCurrency);

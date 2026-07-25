@@ -19,7 +19,7 @@ export interface CountrySetting {
   label: string;
 }
 
-export const DEFAULT_COUNTRY: CountryCode = 'US';
+export const DEFAULT_COUNTRY: CountryCode = 'IN';
 
 export const COUNTRY_SETTINGS: Record<CountryCode, CountrySetting> = {
   US: { locale: 'en', currency: 'USD', label: 'United States' },
